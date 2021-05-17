@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+	<Properties>
+		<Property name="LOG_PATTERN">
+            %d{yyyy-MM-dd HH:mm:ss.SSS} %highlight{(%-5level)} %blue{[%t]} %yellow{(%C :: %L)}: %msg%n%throwable
+        </Property>
+    </Properties>
+    
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${LOG_PATTERN}" />
+        </Console>
+ 
+        <RollingFile name="RollingFile" fileName="./logs/UPP/UPP.log" filePattern="./logs/UPP/BKP-UPP-$${date:yyyy-MM}/MNG-%d{dd-MM-yyyy}-%i.log.gz">
+            <PatternLayout>
+                <pattern>${LOG_PATTERN}</pattern>
+            </PatternLayout>
+            <Policies>
+                <!-- rollover on startup, daily and when the file reaches 10 MegaBytes -->
+                <OnStartupTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="10 MB" />
+                <TimeBasedTriggeringPolicy />
+            </Policies>
+        </RollingFile>
+    </Appenders>
+    
+    <appender name="cloud-watch" class="ios.github.dibog.AwsLogAppender">
+		<createLogGroup>true</createLogGroup>
+		<groupName>CW-GN-CSM</groupName>
+		<streamName>CW-ST-CSM</streamName>
+		<dateFormat>yyyyMMdd_HHmm</dateFormat>
+		<layout>
+			<pattern>${LOG_PATTERN}</pattern>
+		</layout>
+	</appender>
+ 
+    <Loggers>
+        <!-- LOG everything at INFO level -->
+        <Root level="error">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="RollingFile" />
+        </Root>
+        
+        <!-- LOG "br.com.petz*" at level -->
+         <Logger name="br.com.petz" level="trace" additivity="false">
+        	<AppenderRef ref="Console" />
+            <AppenderRef ref="RollingFile" />
+        </Logger>
+
+        <Logger name="org.flywaydb" level="debug" additivity="false">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="RollingFile" />
+        </Logger>
+    </Loggers>
+</Configuration>
