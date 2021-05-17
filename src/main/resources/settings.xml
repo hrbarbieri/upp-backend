@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.1.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.1.0 http://maven.apache.org/xsd/settings-1.1.0.xsd">
+	<pluginGroups>
+      <pluginGroup>org.sonarsource.scanner.maven</pluginGroup>
+  </pluginGroups>
+
+  <servers>
+		<server>
+			<id>petz-nexus</id>
+			<username>petz-user</username>
+			<password>1kCU3Ycwy8</password>
+		</server>
+	</servers>
+
+	<mirrors>
+		<mirror>
+			<id>petz-nexus</id>
+			<name>Petz Nexus</name>
+			<url>https://nexus.labpetz.com.br/repository/maven-public/</url>
+			<mirrorOf>*</mirrorOf>
+		</mirror>
+	</mirrors>
+</settings>
